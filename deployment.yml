@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: usermanagerment  #Your app's name
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: usermanagerment
+    spec:
+      volumes:
+        - name: spanner-creds
+          secret:
+            secretName: spanner-secret
+      containers:
+      - name: usermanagerment  #Your app will be the running container you built
+        image: gcr.io/centering-rex-212817/usermanagerment1:v1
+        env:
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /Users/dxk1nkv/MyWorkspace/usermanagement/src/main/resources/oauth/svc-acct.json
+        volumeMounts:
+          - name: spanner-creds
+            mountPath: /Users/dxk1nkv/MyWorkspace/usermanagement/src/main/resources/oauth
+            readOnly: true
+        imagePullPolicy: Always
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: usermanagerment-load-balancer   #This will be the name of your load balancer
+spec:
+  selector:
+    app: usermanagerment  #The load balancer will be attached to the app you specify by name here
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+  loadBalancerSourceRanges:  #Firewall rules
+  - 151.140.0.0/16
+  - 165.130.0.0/16
+  - 207.11.0.0/17
+  - 50.207.27.182/32
+  - 98.6.11.8/29
