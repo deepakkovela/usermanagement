@@ -21,22 +21,15 @@ pipeline {
    agent {
         docker {
                  image 'google/cloud-sdk'
-                 args '-u 0:0 -v $HOME/.config -e HTTPS_PROXY=thd-svr-proxy-qa.homedepot.com:9090'
+                 args '-u 0:0 -v $HOME/.config -e'
                }
    }
      steps {
              withCredentials([file(credentialsId: "CREDS", variable: 'deployKey')]) {
-                   sh "gcloud config set proxy/type http"
-                   sh "gcloud config set proxy/address thd-svr-proxy-qa.homedepot.com"
-                   sh "gcloud config set proxy/port 7070"
-
                    //GCP Props.
                    sh "gcloud config set project centering-rex-212817"
                    sh "gcloud config set compute/zone us-east1-b"
                    sh "gcloud beta container clusters get-credentials cluster-1 --zone us-east1-b --project centering-rex-212817"
-
-
-
 
                    // Authenticate
                    sh "gcloud auth activate-service-account --key-file ${deployKey}"
