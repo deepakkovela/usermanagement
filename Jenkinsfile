@@ -9,7 +9,9 @@ pipeline {
    stage('build docker') {
      agent any
      steps {
-      docker.build("usermanagement:v1")
+        script {
+            docker.build("usermanagement:v1")
+      }
      }
    }
    stage('push image to gcp') {
