@@ -14,7 +14,7 @@ pipeline {
          }
      }
      steps {
-      docker.build()
+      docker.build("usermanagement:v1")
      }
    }
    stage('push image to gcp') {
