@@ -7,11 +7,14 @@ pipeline {
      }
    }
    stage('build docker') {
-     agent any
+     agent {
+         docker {
+            image 'openjdk:8'
+            args '-v $HOME/.gradle'
+         }
+     }
      steps {
-        script {
-            docker.build("usermanagement:v1")
-      }
+       sh 'docker build -t gcr.io/centering-rex-212817/usermanagerment:v1 .'
      }
    }
    stage('push image to gcp') {
