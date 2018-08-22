@@ -7,12 +7,7 @@ pipeline {
      }
    }
    stage('build docker') {
-     agent {
-         docker {
-            image 'openjdk:8'
-            args '-v $HOME/.gradle'
-         }
-     }
+     agent any
      steps {
       docker.build("usermanagement:v1")
      }
