@@ -14,7 +14,7 @@ pipeline {
          }
      }
      steps {
-       sh 'docker build -t gcr.io/centering-rex-212817/usermanagerment:v1 .'
+      docker.build()
      }
    }
    stage('push image to gcp') {
