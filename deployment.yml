@@ -15,13 +15,13 @@ spec:
             secretName: spanner-secret
       containers:
       - name: usermanagerment  #Your app will be the running container you built
-        image: gcr.io/centering-rex-212817/usermanagerment1:v1
+        image: gcr.io/centering-rex-212817/usermanagerment:v5
         env:
           - name: GOOGLE_APPLICATION_CREDENTIALS
             value: /Users/dxk1nkv/MyWorkspace/usermanagement/src/main/resources/oauth/svc-acct.json
         volumeMounts:
           - name: spanner-creds
-            mountPath: /Users/dxk1nkv/MyWorkspace/usermanagement/src/main/resources/oauth
+            mountPath: /secrets/spanner-secret
             readOnly: true
         imagePullPolicy: Always
 ---

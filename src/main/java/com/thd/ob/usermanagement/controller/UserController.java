@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("users")
-@CrossOrigin(origins = {"http://localhost:3000", "http://104.196.122.48:8080"},
+@CrossOrigin(origins = {"http://localhost:3000", "http://35.231.78.107","http://35.231.78.107:8080"},
         maxAge = 4800, allowCredentials = "false")
 public class UserController {
 
